@@ -27,3 +27,5 @@ Route::get('/transaction/create/{id}', [TransactionController::class, 'createTra
 Route::post('/transactionForUser', [EmployeeController::class, 'replaceStatusTransaction'])->name('employee.buy');
 
 Route::post('/hourlyRates/create', [HourlyRates::class, 'saveForUser'])->name('hourly.rates.create.for.user');
+
+Route::get('/payAll/{id}', [TransactionController::class, 'payAllTransaction'])->name('pay.all.transaction');

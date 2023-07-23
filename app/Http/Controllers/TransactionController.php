@@ -22,9 +22,9 @@ class TransactionController extends Controller
      * Show the form for creating a new resource.
      * @throws GuzzleException
      */
-    public function createTransaction(string $idUser)
+    public function createTransaction(string $employeeId)
     {
-        $employee = (new SalaryApi())->getWithId('employee', $idUser);
+        $employee = (new SalaryApi())->getWithId('employee', $employeeId);
         return view('add_transaction', ['employee' => $employee]);
     }
 
@@ -41,6 +41,25 @@ class TransactionController extends Controller
             return back()->withInput()->with('message', $message['message']);
         }
         return redirect('transaction.create.for.user', $validate['employee_id']);
+    }
+
+    /**
+     * @throws GuzzleException
+     */
+    public function payAllTransaction(string $employeeId)
+    {
+        $employee = (new SalaryApi())->getWithId('employee', $employeeId);
+
+        if (!empty($employee['transactions'])) {
+            foreach ($employee['transactions'] as $transaction) {
+                if ($transaction['statusId'] == 1) {
+                    $transaction['statusId'] = 3;
+                    (new SalaryApi())->put($transaction['id'], $transaction, 'transaction');
+                }
+            }
+        }
+
+        return redirect()->route('employee.index');
     }
 
     /**
