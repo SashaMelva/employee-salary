@@ -35,7 +35,6 @@ class TransactionController extends Controller
     public function store(TransactionRequest $request)
     {
         $validate = $request->validated();
-      //  dd($validate);
         $message = (new SalaryApi())->post($validate, 'transaction');
 
         if (isset($message['message'])) {
@@ -47,15 +46,23 @@ class TransactionController extends Controller
     /**
      * @throws GuzzleException
      */
-    public function payAllTransaction(string $employeeId)
+    public function payAllTransaction(TransactionRequest $request)
     {
-        $employee = (new SalaryApi())->getWithId('employee', $employeeId);
+        $validate = $request->validated();
+        $employee = (new SalaryApi())->getWithId('employee', $validate['employee_id']);
 
         if (!empty($employee['transactions'])) {
             foreach ($employee['transactions'] as $transaction) {
-                if ($transaction['statusId'] == 1) {
-                    $transaction['statusId'] = 3;
-                    (new SalaryApi())->put($transaction['id'], $transaction, 'transaction');
+                if ($transaction['status']['id'] != 1) {
+
+                    $dataTransaction = [
+                        'id' => $transaction['id'],
+                        'hours' => $transaction['hours'],
+                        'employee_id' => $transaction['employee_id'],
+                        'status_transaction_id' => 1
+                    ];
+
+                    (new SalaryApi())->put($transaction['id'], $dataTransaction, 'transaction');
                 }
             }
         }

@@ -31,9 +31,15 @@ class SalaryApi
      */
     public function getWithId(string $model, string $id)
     {
-        $uriWithId = $model . '/' . $id;
-        $response = $this->client->get($this->uri($uriWithId));
-        return $this->checkStatutoryApi($response->getBody());
+        $employees = $this->get($model);
+        $employee = [];
+
+        foreach ($employees as $employeeApi) {
+            if ($employeeApi['id'] == $id) {
+                $employee = $employeeApi;
+            }
+        }
+        return $employee;
     }
 
     /**

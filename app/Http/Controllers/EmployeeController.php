@@ -51,15 +51,7 @@ class EmployeeController extends Controller
      */
     public function show(string $id)
     {
-        $employees = (new SalaryApi())->get('employee');
-        $employee = [];
-
-        foreach ($employees as $employeeApi) {
-            if ($employeeApi['id'] == $id) {
-                $employee = $employeeApi;
-            }
-        }
-
+        $employee = (new SalaryApi())->getWithId('employee', $id);
         return view('employee_about', ['employee' => $employee]);
     }
 

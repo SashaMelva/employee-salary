@@ -48,7 +48,7 @@
                                             $minutes += (int)$timeTransactionArray[1];
                                         }
 
-                                        if ($minutes > 60){
+                                        if ($minutes > 60) {
                                             $hours += (int)($minutes / 60);
                                             $minutes = $minutes % 60;
                                         }
@@ -74,9 +74,14 @@
                             </td>
                             <td class="px-6 py-5">
                                 <form action="{{ route('pay.all.transaction') }}" method="POST">
-                                    <input>
-                                    <button type="submit" class="btn-a-green">Выплатить
-                                        всё</button>
+                                    @csrf
+                                    <input id="employee_id" name="employee_id" type="hidden" value="{{ $employee['id'] }}">
+                                    <input id="status_transaction_id" name="status_transaction_id" type="hidden" value="3">
+                                    <input id="hours" name="hours" type="hidden" value="00:00">
+                                    <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
+                                    <button type="submit" class="btn-a-green">
+                                        Выплатить всё
+                                    </button>
                                 </form>
 
                             </td>
@@ -85,6 +90,22 @@
                             </td>
                         </tr>
                     @endforeach
+                    <div class="w-full md:w-1/2 px-3">
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+                        @if(session('message'))
+                            <div class="alert alert-danger">
+                                {{ session('message') }}
+                            </div>
+                        @endif
+                    </div>
                     </tbody>
                 </table>
             </div>
