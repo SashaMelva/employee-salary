@@ -16,13 +16,14 @@ class EmployeeController extends Controller
     public function index()
     {
         $employees = (new SalaryApi())->get('employee');
-        return view('employee', ['employees' => $employees]);
+        $statusTransactions = (new SalaryApi())->get('statusTransaction');
+        return view('employee', ['employees' => $employees, 'statusTransactions' => $statusTransactions]);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create(): \Illuminate\Contracts\View\View
+    public function create()
     {
         return view('employee_add');
     }
@@ -46,6 +47,7 @@ class EmployeeController extends Controller
 
     /**
      * Display the specified resource.
+     * @throws GuzzleException
      */
     public function show(string $id)
     {

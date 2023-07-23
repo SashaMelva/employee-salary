@@ -23,7 +23,7 @@ class TransactionRequest extends FormRequest
     {
         $rules = [
             'hours' => 'required|date_format:H:i',
-            'price' => 'min:1|max:255|float',
+            'id_status' => 'required',
             'employee_id' => 'required|integer'
         ];
 

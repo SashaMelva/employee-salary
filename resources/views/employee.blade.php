@@ -22,19 +22,52 @@
                         <th scope="col" class="px-6 py-5">Сумма выплаты</th>
                         <th scope="col" class="px-6 py-5">Статус</th>
                         <th scope="col" class="px-6 py-5"></th>
+                        <th scope="col" class="px-6 py-5"></th>
                     </tr>
                     </thead>
                     <tbody>
                     @foreach($employees as $employee)
                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                            <td class="px-6 py-5">{{$employee['id']}}</td>
-                            <td class="px-6 py-5">{{$employee['email']}}</td>
-                            <td class="px-6 py-5"></td>
-                            <td class="px-6 py-5"></td>
-                            <td class="px-6 py-5"></td>
-                            <td class="px-6 py-5"></td>
+                            <td class="px-6 py-5">{{ $employee['id'] }}</td>
+                            <td class="px-6 py-5">{{ $employee['email'] }}</td>
                             <td class="px-6 py-5">
-                                <a class="btn-a-green" href="{{route('employee.show', $employee['id'])}}">Профиль</a>
+                                    <?php
+                                    if (empty($employee['hourlyRates'])) {
+                                        $price = 0;
+                                    } else {
+                                        $price = $employee['hourlyRates']['price'];
+                                    }
+
+                                    $time = 0;
+                                    foreach ($employee['transactions'] as $transaction) {
+
+                                        if ($transaction['status_id'] !== 3) {
+                                            $time = strtotime($time) + strtotime($transaction['time']) - strtotime("00:00:00");
+                                        }
+                                    }
+                                    $sum = $price * $time;
+                                    echo date('H:i', $time);
+                                    ?>
+                            </td>
+                            <td class="px-6 py-5">
+                                    <?= $price ?> руб
+
+                            </td>
+                            <td class="px-6 py-5">
+                                    <?= $sum ?> руб
+                            </td>
+                            <td class="px-6 py-5">
+                                @if($sum == 0)
+                                    Не выплачено
+                                @else
+                                    Выплачено
+                                @endif
+                            </td>
+                            <td class="px-6 py-5">
+                                <a class="btn-a-green" href="{{ route('employee.buy', $employee['id']) }}">Выплатить всё</a>
+                            </td>
+                            <td class="px-6 py-5">
+                                <a class="btn-a-green" href="{{ route('employee.show', $employee['id']) }}">Профиль</a>
                             </td>
                         </tr>
                     @endforeach

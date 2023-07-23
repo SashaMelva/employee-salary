@@ -19,3 +19,8 @@ Route::get('/', [EmployeeController::class, 'index']);
 
 Route::resource('/employee', EmployeeController::class);
 Route::resource('/transaction', TransactionController::class);
+
+
+Route::get('/transaction/create/{id}', [TransactionController::class, 'createTransaction'])->name('transaction.create.for.user');
+
+Route::post('/transactionForUser', [EmployeeController::class, 'replaceStatusTransaction'])->name('employee.buy');
