@@ -49,7 +49,8 @@ class EmployeeController extends Controller
      */
     public function show(string $id)
     {
-        return view('employee_about');
+        $employee = (new SalaryApi())->getWithId('employee', $id);
+        return view('employee_about', ['employee' => $employee]);
     }
 
     /**

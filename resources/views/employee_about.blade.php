@@ -21,28 +21,25 @@
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($employees as $employee)
                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                     <th scope="row"
                         class="px-6 py-5 font-medium text-gray-900 dark:text-white whitespace-nowrap">
                     </th>
-                    <td class="px-6 py-5">{{$employee->id}}</td>
-                    <td class="px-6 py-5">{{$employee->email}}</td>
+                    <td class="px-6 py-5">{{$employee['id']}}</td>
+                    <td class="px-6 py-5">{{$employee['email']}}</td>
                     <td class="px-6 py-5"></td>
                     <td class="px-6 py-5"></td>
                     <td class="px-6 py-5"></td>
                     <td class="px-6 py-5"></td>
-                    <td class="px-6 py-5">
-                        <a class="btn-a-green" href="{{route('employee.show', $employee->id)}}">Выплатить</a>
-                    </td>
+                    <td class="px-6 py-5"></td>
                 </tr>
-                @endforeach
                 </tbody>
             </table>
         </div>
         <div class="grid gap-6 lg:gap-8">
             <p>Сумма всех необходимых выплат: </p>
-            <a class="btn-a-green" href="{{route('employee.show', $employee->id)}}">Выплатить всё</a>
+            <a class="btn-a-green" href="">Выплатить всё</a>
+            <a class="btn-a-green" href="{{ route('employee.index') }}">Назад</a>
         </div>
     </div>
 </div>

@@ -29,6 +29,17 @@ class SalaryApi
      * @throws GuzzleException
      * @throws Exception
      */
+    public function getWithId(string $model, string $id)
+    {
+        $uriWithId = $model . '/' . $id;
+        $response = $this->client->get($this->uri($uriWithId));
+        return $this->checkStatutoryApi($response->getBody());
+    }
+
+    /**
+     * @throws GuzzleException
+     * @throws Exception
+     */
     public function post(array $validData, string $model)
     {
         try {
