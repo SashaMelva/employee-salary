@@ -35,12 +35,13 @@ class TransactionController extends Controller
     public function store(TransactionRequest $request)
     {
         $validate = $request->validated();
+      //  dd($validate);
         $message = (new SalaryApi())->post($validate, 'transaction');
 
         if (isset($message['message'])) {
             return back()->withInput()->with('message', $message['message']);
         }
-        return redirect('transaction.create.for.user', $validate['employee_id']);
+        return redirect()->route('employee.show', (int)$validate['employee_id']);
     }
 
     /**

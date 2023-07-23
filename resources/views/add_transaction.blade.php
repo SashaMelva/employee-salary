@@ -17,7 +17,7 @@
                                 Почта сотрудника: {{ $employee['email'] }}
                             </label>
                             <input id="employee_id" name="employee_id" type="text" value="{{ $employee['id'] }}" hidden="hidden">
-                            <input id="id_status" name="id_status" type="text" value="3" hidden="hidden">
+                            <input id="status_transaction_id" name="status_transaction_id" type="text" value="3" hidden="hidden">
                         </div>
                         <div class="flex flex-wrap -mx-3 mb-6 flex-column" style="flex-direction: column;">
                             <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">

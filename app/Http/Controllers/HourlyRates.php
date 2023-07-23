@@ -13,15 +13,17 @@ class HourlyRates extends Controller
      * @throws GuzzleException
      */
     public function saveForUser(HourlyRatesRequest $request) {
-        $validate = $request->validated();
 
+        $validate = $request->validated();
+       // $validate['employee_id'] = (int)$validate['employee_id'];
+        //dd($validate);
         $message = (new SalaryApi())->post($validate, 'hourlyRate');
 
         if (isset($message['message'])) {
             return back()->withInput()->with('message', $message['message']);
         }
 
-        return redirect()->route('employee.show', $validate['id']);
+        return redirect()->route('employee.show', $validate['employee_id']);
 
     }
 }

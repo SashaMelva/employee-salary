@@ -9,7 +9,7 @@
             <div class="grid gap-6 lg:gap-8">
                 <p>Ставка сотрудника в час:</p>
                 @if(!empty($employee['hourlyRates']))
-                    {{ $employee['hourlyRates']['price'] }}
+                    {{ $employee['hourlyRates'][0]['price'] }}
                 @else
                     <form action="{{ route('hourly.rates.create.for.user') }}" method="POST">
                         @csrf
@@ -51,16 +51,18 @@
                     </tr>
                     </thead>
                     <tbody>
+                    @foreach( $employee['transactions'] as $transaction)
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                         <th scope="row"
                             class="px-6 py-5 font-medium text-gray-900 dark:text-white whitespace-nowrap">
                         </th>
-                        <td class="px-6 py-5"></td>
-                        <td class="px-6 py-5"></td>
-                        <td class="px-6 py-5"></td>
-                        <td class="px-6 py-5"></td>
+                        <td class="px-6 py-5">{{ $transaction['id'] }}</td>
+                        <td class="px-6 py-5">{{ $transaction['hours'] }}</td>
+                        <td class="px-6 py-5">{{ $employee['hourlyRates'][0]['price'] }} руб</td>
+                        <td class="px-6 py-5">{{ $transaction['status']['title'] }}</td>
                         <td class="px-6 py-5"></td>
                     </tr>
+                    @endforeach
                     </tbody>
                 </table>
             </div>

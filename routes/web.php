@@ -28,4 +28,4 @@ Route::post('/transactionForUser', [EmployeeController::class, 'replaceStatusTra
 
 Route::post('/hourlyRates/create', [HourlyRates::class, 'saveForUser'])->name('hourly.rates.create.for.user');
 
-Route::get('/payAll/{id}', [TransactionController::class, 'payAllTransaction'])->name('pay.all.transaction');
+Route::post('/payAll/{id}', [TransactionController::class, 'payAllTransaction'])->name('pay.all.transaction');

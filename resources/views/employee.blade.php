@@ -32,39 +32,53 @@
                             <td class="px-6 py-5">{{ $employee['email'] }}</td>
                             <td class="px-6 py-5">
                                     <?php
+                                    $hours = 0;
+                                    $minutes = 0;
+
                                     if (empty($employee['hourlyRates'])) {
                                         $price = 0;
                                     } else {
-                                        $price = $employee['hourlyRates']['price'];
+                                        $price = $employee['hourlyRates'][0]['price'];
                                     }
 
-                                    $time = 0;
                                     foreach ($employee['transactions'] as $transaction) {
+                                        if ($transaction['status']['id'] !== 1) {
+                                            $timeTransactionArray = explode(':', $transaction['hours']);
+                                            $hours += (int)$timeTransactionArray[0];
+                                            $minutes += (int)$timeTransactionArray[1];
+                                        }
 
-                                        if ($transaction['status_id'] !== 3) {
-                                            $time = strtotime($time) + strtotime($transaction['time']) - strtotime("00:00:00");
+                                        if ($minutes > 60){
+                                            $hours += (int)($minutes / 60);
+                                            $minutes = $minutes % 60;
                                         }
                                     }
-                                    $sum = $price * $time;
-                                    echo date('H:i', $time);
+
+                                    $time = $hours . ':' . $minutes;
+                                    $sum = $price * $hours;
+                                    echo $time;
                                     ?>
                             </td>
                             <td class="px-6 py-5">
-                                    <?= $price ?> руб
-
+                                {{ $price }} руб
                             </td>
                             <td class="px-6 py-5">
-                                    <?= $sum ?> руб
+                                {{ $sum }} руб
                             </td>
                             <td class="px-6 py-5">
                                 @if($sum == 0)
-                                    Не выплачено
-                                @else
                                     Выплачено
+                                @else
+                                    Не выплачено
                                 @endif
                             </td>
                             <td class="px-6 py-5">
-                                <a class="btn-a-green" href="{{ route('employee.buy', $employee['id']) }}">Выплатить всё</a>
+                                <form action="{{ route('pay.all.transaction') }}" method="POST">
+                                    <input>
+                                    <button type="submit" class="btn-a-green">Выплатить
+                                        всё</button>
+                                </form>
+
                             </td>
                             <td class="px-6 py-5">
                                 <a class="btn-a-green" href="{{ route('employee.show', $employee['id']) }}">Профиль</a>
