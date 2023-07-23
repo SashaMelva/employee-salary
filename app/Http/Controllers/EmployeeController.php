@@ -35,7 +35,6 @@ class EmployeeController extends Controller
     public function store(EmployeeRequest $request)
     {
         $validate = $request->validated();
-
         $message = (new SalaryApi())->post($validate, 'employee');
 
         if (isset($message['message'])) {

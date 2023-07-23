@@ -15,8 +15,6 @@ class HourlyRates extends Controller
     public function saveForUser(HourlyRatesRequest $request) {
 
         $validate = $request->validated();
-       // $validate['employee_id'] = (int)$validate['employee_id'];
-        //dd($validate);
         $message = (new SalaryApi())->post($validate, 'hourlyRate');
 
         if (isset($message['message'])) {

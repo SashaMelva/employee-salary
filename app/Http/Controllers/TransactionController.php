@@ -40,6 +40,7 @@ class TransactionController extends Controller
         if (isset($message['message'])) {
             return back()->withInput()->with('message', $message['message']);
         }
+
         return redirect()->route('employee.show', (int)$validate['employee_id']);
     }
 
@@ -52,16 +53,16 @@ class TransactionController extends Controller
         $employee = (new SalaryApi())->getWithId('employee', $validate['employee_id']);
 
         if (!empty($employee['transactions'])) {
-            foreach ($employee['transactions'] as $transaction) {
-                if ($transaction['status']['id'] != 1) {
 
+            foreach ($employee['transactions'] as $transaction) {
+
+                if ($transaction['status']['id'] != 1) {
                     $dataTransaction = [
                         'id' => $transaction['id'],
                         'hours' => $transaction['hours'],
                         'employee_id' => $transaction['employee_id'],
                         'status_transaction_id' => 1
                     ];
-
                     (new SalaryApi())->put($transaction['id'], $dataTransaction, 'transaction');
                 }
             }

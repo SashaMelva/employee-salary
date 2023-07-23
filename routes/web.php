@@ -18,8 +18,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [EmployeeController::class, 'index']);
 
-Route::resource('/employee', EmployeeController::class);
-Route::resource('/transaction', TransactionController::class);
+Route::resource('/employee', EmployeeController::class)->except([
+    'edit', 'update', 'destroy'
+]);
+
+Route::resource('/transaction', TransactionController::class)->except([
+    'show', 'edit', 'update', 'destroy', 'index'
+]);
 
 
 Route::get('/transaction/create/{id}', [TransactionController::class, 'createTransaction'])->name('transaction.create.for.user');
