@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\HourlyRates;
 use App\Http\Controllers\TransactionController;
 use Illuminate\Support\Facades\Route;
 
@@ -24,3 +25,5 @@ Route::resource('/transaction', TransactionController::class);
 Route::get('/transaction/create/{id}', [TransactionController::class, 'createTransaction'])->name('transaction.create.for.user');
 
 Route::post('/transactionForUser', [EmployeeController::class, 'replaceStatusTransaction'])->name('employee.buy');
+
+Route::post('/hourlyRates/create', [HourlyRates::class, 'saveForUser'])->name('hourly.rates.create.for.user');
