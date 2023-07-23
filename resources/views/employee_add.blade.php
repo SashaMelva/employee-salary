@@ -19,7 +19,7 @@
                                 </label>
                                 <input
                                     class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                                    id="email" name="email" type="text" placeholder="email">
+                                    id="email" name="email" type="text" placeholder="email" value="{{ old('email') }}">
                             </div>
                             <div class="w-full md:w-1/2 px-3">
                                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
@@ -28,8 +28,9 @@
                                 </label>
                                 <input
                                     class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                    id="password" name="password" type="password" placeholder="пароль">
-                                <button onclick="checkPassword()">()</button>
+                                    id="password" name="password" type="password" placeholder="пароль"
+                                    value="{{ old('password') }}">
+                                <button type="button" onclick="checkPassword()">()</button>
                             </div>
                             <div class="w-full md:w-1/2 px-3">
                                 @if ($errors->any())
@@ -41,11 +42,15 @@
                                         </ul>
                                     </div>
                                 @endif
+                                @if(session('message'))
+                                    <div class="alert alert-danger">
+                                        {{ session('message') }}
+                                    </div>
+                                @endif
                             </div>
                         </div>
                         <div class="p-6" style="display: flex; justify-content: space-between;">
-                            <button class="btn-a-green" type="submit">Сохранить
-                            </button>
+                            <button class="btn-a-green" type="submit">Сохранить</button>
                             <a class="btn-a-dark" href="{{route('employee.index')}}">Назад</a>
                         </div>
                         <input type="hidden" name="_token" value="{{ csrf_token() }}"/>

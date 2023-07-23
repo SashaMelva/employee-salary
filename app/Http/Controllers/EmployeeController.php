@@ -3,11 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\EmployeeRequest;
-use App\Http\Servises\SalaryApi;
-use App\Models\Employee;
+use App\Http\Services\SalaryApi;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
 
 class EmployeeController extends Controller
 {
@@ -17,11 +15,8 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        $response = Http::get('http://0.0.0.0/api/employee');
-        dd($response);
-       // $employees = (new SalaryApi())->get('employee');
-        var_dump("yyui");
-       // return view('employee', ['employees' => $employees]);
+        $employees = (new SalaryApi())->get('employee');
+        return view('employee', ['employees' => $employees]);
     }
 
     /**
@@ -34,18 +29,19 @@ class EmployeeController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     * @throws GuzzleException
      */
     public function store(EmployeeRequest $request)
     {
-//        $validate = $request->validated();
-//        $validateForJsonApi = [
-//            'email' => $this->$validate['email'],
-//            'password' => $this->$validate['password']
-//        ];
-//
-//        (new BaseApi())->post($validateForJsonApi, 'employee');
-//
-//        return redirect()->route('employee.index');
+        $validate = $request->validated();
+
+        $message = (new SalaryApi())->post($validate, 'employee');
+
+        if (isset($message['message'])) {
+            return back()->withInput()->with('message', $message['message']);
+        }
+
+        return redirect()->route('employee.index');
     }
 
     /**

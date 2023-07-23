@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Servises;
+namespace App\Http\Services;
 
+use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 
@@ -11,34 +12,44 @@ class SalaryApi
 
     public function __construct()
     {
-        $this->client = new Client(['base_uri' => 'http://0.0.0.0']);
+        $this->client = new Client(['base_uri' => 'https://api_for_salary.happy.tatar']);
     }
 
     /**
      * @throws GuzzleException
+     * @throws Exception
      */
     public function get(string $model)
     {
         $response = $this->client->get($this->uri($model));
-        return $response->getBody();
+        return $this->checkStatutoryApi($response->getBody());
     }
+
     /**
      * @throws GuzzleException
+     * @throws Exception
      */
-    public function post(array $validData, string $model): void
+    public function post(array $validData, string $model)
     {
-        $response = $this->client->post(
-            $this->uri($model),
-            [
-                'headers' => [
-                    'Accept' => 'application/json'
-                ],
+        try {
+            $response = $this->client->post(
+                $this->uri($model),
+                [
+                    'headers' => [
+                        'Accept' => 'application/json'
+                    ],
 
-                'json' => $validData
-            ]
-        );
+                    'json' => $validData
+                ]
+            );
+            return $this->checkStatutoryApi($response->getBody());
 
-        $response->getBody();
+        } catch (Exception $exception){
+            if($exception->getCode() == 422) {
+                return ['message' => explode('"',$exception->getMessage())[3]];
+            }
+            throw new Exception($exception->getMessage());
+        }
     }
 
     /**
@@ -67,5 +78,18 @@ class SalaryApi
     private function uri(string $model): string
     {
         return '/api/' . $model;
+    }
+
+    /**
+     * @throws Exception
+     */
+    private function checkStatutoryApi($response) {
+        $decodeResponse = json_decode($response,true);
+
+        if($decodeResponse['success']){
+            return $decodeResponse['data'];
+        }
+
+        throw new Exception("Request for Api filed");
     }
 }
