@@ -67,8 +67,7 @@
                 </table>
             </div>
             <div class="grid gap-6"
-                 style="grid-template-columns: 1fr max-content max-content max-content; align-items: center;">
-                <p>Сумма всех необходимых выплат: </p>
+                 style="grid-template-columns:max-content max-content max-content; align-items: center;">
                 <a class="btn-a-green" href="">Выплатить всё</a>
                 <a class="btn-a-green" href="{{ route('transaction.create.for.user', $employee['id']) }}">Добавить
                     транзакцию</a>

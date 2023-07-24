@@ -61,9 +61,9 @@ class SalaryApi
             );
             return $this->checkStatutoryApi($response->getBody());
 
-        } catch (Exception $exception){
-            if($exception->getCode() == 422) {
-                return ['message' => explode('"',$exception->getMessage())[3]];
+        } catch (Exception $exception) {
+            if ($exception->getCode() == 422) {
+                return ['message' => explode('"', $exception->getMessage())[3]];
             }
             throw new Exception($exception->getMessage());
         }
@@ -100,10 +100,11 @@ class SalaryApi
     /**
      * @throws Exception
      */
-    private function checkStatutoryApi($response) {
-        $decodeResponse = json_decode($response,true);
+    private function checkStatutoryApi($response)
+    {
+        $decodeResponse = json_decode($response, true);
 
-        if($decodeResponse['success']){
+        if ($decodeResponse['success']) {
             return $decodeResponse['data'];
         }
 

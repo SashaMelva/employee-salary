@@ -73,17 +73,17 @@
                                 @endif
                             </td>
                             <td class="px-6 py-5">
-                                <form action="{{ route('pay.all.transaction') }}" method="POST">
-                                    @csrf
-                                    <input id="employee_id" name="employee_id" type="hidden" value="{{ $employee['id'] }}">
-                                    <input id="status_transaction_id" name="status_transaction_id" type="hidden" value="3">
-                                    <input id="hours" name="hours" type="hidden" value="00:00">
-                                    <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
-                                    <button type="submit" class="btn-a-green">
-                                        Выплатить всё
-                                    </button>
-                                </form>
-
+                                {{--                                <form action="{{ route('pay.all.transaction') }}" method="POST">--}}
+                                {{--                                    @csrf--}}
+                                {{--                                    <input id="employee_id" name="employee_id" type="hidden" value="{{ $employee['id'] }}">--}}
+                                {{--                                    <input id="status_transaction_id" name="status_transaction_id" type="hidden" value="3">--}}
+                                {{--                                    <input id="hours" name="hours" type="hidden" value="00:00">--}}
+                                {{--                                    <input type="hidden" name="_token" value="{{ csrf_token() }}"/>--}}
+                                {{--                                    <button type="submit" class="btn-a-green">--}}
+                                {{--                                        Выплатить всё--}}
+                                {{--                                    </button>--}}
+                                {{--                                </form>--}}
+                                <a href="" class="btn-a-green">Выплатить всё</a>
                             </td>
                             <td class="px-6 py-5">
                                 <a class="btn-a-green" href="{{ route('employee.show', $employee['id']) }}">Профиль</a>
