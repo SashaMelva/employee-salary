@@ -61,9 +61,10 @@ class TransactionController extends Controller
                         'id' => $transaction['id'],
                         'hours' => $transaction['hours'],
                         'employee_id' => $transaction['employee_id'],
-                        'status_transaction_id' => '1'
+                        'status_transaction_id' => 1,
                     ];
-                    (new SalaryApi())->put($transaction['id'], $dataTransaction, 'transaction');
+
+                    (new SalaryApi())->put($dataTransaction['id'], $dataTransaction, 'transaction');
                 }
             }
         }

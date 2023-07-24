@@ -81,15 +81,21 @@ class SalaryApi
 
     /**cr
      * @throws GuzzleException
+     * @throws Exception
      */
     public function put(int $id, array $validData, string $model): void
     {
-        $this->client->put(
-            $this->uri($model) . "/$id",
-            [
-                'json' => $validData
-            ]
-        );
+        try {
+            $this->client->put(
+                $this->uri($model) . "/$id",
+                [
+                    'json' => $validData
+                ]
+            );
+
+        } catch (Exception $exception) {
+            throw new Exception($exception->getMessage());
+        }
     }
 
     private function uri(string $model): string

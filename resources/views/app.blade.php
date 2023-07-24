@@ -12,6 +12,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <!-- Styles -->
     <style>
+
         /* ! tailwindcss v3.2.4 | MIT License | https://tailwindcss.com */
         *, ::after, ::before {
             box-sizing: border-box;
@@ -754,7 +755,15 @@
                 justify-content: space-between
             }
 
+            .content-space-between {
+                justify-content: space-between
+            }
+
             .sm\:text-left {
+                text-align: left
+            }
+
+            .text-left {
                 text-align: left
             }
 
@@ -778,18 +787,47 @@
                 padding: 2rem
             }
         }
-        .btn-a-green{
+
+        .btn-a-green {
             background-color: green;
             color: white;
             padding: 8px;
             border-radius: 10px;
         }
 
-        .btn-a-dark{
+        .btn-a-dark {
             background-color: rgb(30 41 59);
             color: white;
             padding: 8px;
             border-radius: 10px;
+        }
+
+        .input-form {
+            width: 100%;
+            height: 27px;
+            padding: 5px;
+            border: solid 2px gray;
+            border-radius: 5px;
+            margin: 10px;
+        }
+
+        .label-form {
+            margin: 0 10px;
+        }
+
+        .flex-direction-col {
+            flex-direction: column;
+        }
+
+        .container-for-form {
+            width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .template-greed {
+            grid-template-columns:max-content max-content max-content;
+            align-items: center;
         }
     </style>
 </head>
